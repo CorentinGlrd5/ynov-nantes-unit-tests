@@ -64,4 +64,11 @@ describe("Test Gilded Rose", () => {
     expect(gildedRose.items[1].quality).toBe(25);
     expect(gildedRose.items[2].quality).toBe(30);
   });
+
+  test("Les éléments 'Conjured' voient leur qualité se dégrader de deux fois plus vite que les objets normaux.", () => {
+    const items = [new Item("Conjured Mana Cake", 3, 6)];
+    const gildedRose = new Shop(items);
+    gildedRose.updateQuality();
+    expect(gildedRose.items[0].quality).toBe(4);
+  });
 });
