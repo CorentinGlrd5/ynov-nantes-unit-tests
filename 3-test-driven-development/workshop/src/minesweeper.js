@@ -42,7 +42,9 @@ function parseString(input) {
   });
   let sizes = input.match(/[0-9 ]+/g);
   sizes.forEach((size, i) => {
-    if (
+    if (size[0] == 0 && size[2] == 0) {
+      sizes.splice(i, 1);
+    } else if (
       size[0] > 0 &&
       size[0] <= 100 &&
       size[2] > 0 &&
@@ -51,8 +53,6 @@ function parseString(input) {
       parseInt(size[2]) !== NaN
     ) {
       return;
-    } else if (size[0] === 0 && size[2] === 0) {
-      sizes.splice(i, 1);
     } else {
       throw new Error("Invalid input");
     }
@@ -70,7 +70,7 @@ function parseString(input) {
   return hints.join("");
 }
 
-console.log(parseString("4 4*........*......3 5**.........*..."));
+console.log(parseString("4 4*........*......3 5**.........*...0 0"));
 
 module.exports = {
   minesweeper,
