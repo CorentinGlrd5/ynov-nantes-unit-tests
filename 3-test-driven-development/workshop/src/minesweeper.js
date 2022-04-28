@@ -30,15 +30,38 @@ function minesweeper(board) {
 }
 
 function parseString(input) {
-  let fields = input.split(/[0-9 ]+/g).filter((field) => field);
-  let sizes = input.match(/[0-9 ]+/g);
-  sizes.pop();
-  const hints = fields.map((field, i) => {
+  let splitted = input.split(/[0-9 ]+/g).filter((field) => field);
+  let fields = splitted.map((field) => {
     let array = field.split("");
+    array.forEach((char) => {
+      if (char !== "*" && char !== ".") {
+        throw new Error("Invalid character");
+      }
+    });
+    return array;
+  });
+  let sizes = input.match(/[0-9 ]+/g);
+  sizes.forEach((size, i) => {
+    if (
+      size[0] > 0 &&
+      size[0] <= 100 &&
+      size[2] > 0 &&
+      size[2] <= 100 &&
+      parseInt(size[0]) !== NaN &&
+      parseInt(size[2]) !== NaN
+    ) {
+      return;
+    } else if (size[0] === 0 && size[2] === 0) {
+      sizes.splice(i, 1);
+    } else {
+      throw new Error("Invalid input");
+    }
+  });
+  const hints = fields.map((field, i) => {
     let board = [];
     let size = parseInt(sizes[i][2]);
-    for (let x = 0; x < array.length; x += size) {
-      let line = array.slice(x, x + size);
+    for (let x = 0; x < field.length; x += size) {
+      let line = field.slice(x, x + size);
       board.push(line);
     }
     let result = minesweeper(board);
@@ -47,7 +70,7 @@ function parseString(input) {
   return hints.join("");
 }
 
-console.log(parseString("4 4*........*......3 5**.........*...0 0"));
+console.log(parseString("4 4*........*......3 5**.........*..."));
 
 module.exports = {
   minesweeper,
