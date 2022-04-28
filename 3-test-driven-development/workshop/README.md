@@ -1,6 +1,6 @@
 # Gilded Rose
 
-This is the Gilded Rose kata in JavaScript with Jest
+This is the Minesweeper kata in JavaScript with Jest
 
 ## Getting started
 

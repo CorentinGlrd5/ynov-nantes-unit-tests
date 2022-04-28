@@ -73,8 +73,6 @@ function minesweeper(input) {
   return hints.join("");
 }
 
-console.log(minesweeper("4 4*........*......3 5**.........*...0 0"));
-
 module.exports = {
   minesweeper,
 };
