@@ -1,6 +1,6 @@
 const ToDo = require("../models/todo.model").ToDo;
 
-export class ToDoService {
+class ToDoService {
   getFindAllToDO(res) {
     return ToDo.find()
       .then((toDos) => res.status(200).send(toDos))
@@ -25,3 +25,5 @@ export class ToDoService {
       .catch((err) => res.status(400).send(err));
   }
 }
+
+module.exports = ToDoService;
