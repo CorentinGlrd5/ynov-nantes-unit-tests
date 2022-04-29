@@ -8,7 +8,16 @@ const mongoDB = new MongoDB();
 
 describe("e2e with supertest", () => {
   beforeAll(() => {
-    mongoDB.connect("mongodb://mongo:27017/docker-node-mongo-todo-app");
+    /*
+     *
+     *  URI de la bdd mongo en local pour pouvoir text les tests en local
+     *  mongodb://localhost:27017/todo
+     *
+     *  URI de la bdd mongo avec docker
+     *  mongodb://localhost:27017/todo
+     *
+     */
+    mongoDB.connect("mongodb://mongo:27017/toDoApp");
   });
 
   afterAll(() => {
@@ -21,21 +30,20 @@ describe("e2e with supertest", () => {
       .send({ text: "Blablabla", done: true })
       .expect(201)
       .expect((res) => {
-        Object.keys(res.body.data).length = 2;
-        res.body.data.text = "Blablabla";
-        res.body.data.done = true;
+        expect(res.body.text).toBe("Blablabla");
+        expect(res.body.done).toBe(false);
       });
   });
 
   test("PATCH /api/todo/:id", async () => {
-    let toDo = await ToDo.findOne({ name: "Blablabla" });
+    let toDo = await ToDo.findOne({ text: "Blablabla" });
+    console.log(1, toDo);
     return request(app)
       .patch(`/api/todo/${toDo._id}`)
       .send({ done: false })
       .expect(200)
       .expect((res) => {
-        Object.keys(res.body.data).length = 2;
-        res.body.data.done = false;
+        expect(res.body.done).toBe(false);
       });
   });
 

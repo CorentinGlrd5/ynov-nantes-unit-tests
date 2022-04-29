@@ -27,6 +27,15 @@ app.use(bodyParser.json());
 app.use("/api/todo", toDo);
 
 // Connect to MongoDB
+/*
+ *
+ *  URI de la bdd mongo en local pour pouvoir text les tests en local
+ *  mongodb://localhost:27017/todo
+ *
+ *  URI de la bdd mongo avec docker
+ *  mongodb://localhost:27017/todo
+ *
+ */
 mongoDB.connect("mongodb://mongo:27017/toDoApp");
 
 module.exports = app;

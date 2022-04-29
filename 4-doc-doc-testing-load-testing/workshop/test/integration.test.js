@@ -7,7 +7,16 @@ const mongoDB = new MongoDB();
 describe("testTodoModel", () => {
   beforeAll(async () => {
     // Connect to MongoDB
-    mongoDB.connect("mongodb://mongo:27017/docker-node-mongo-todo-app");
+    /*
+     *
+     *  URI de la bdd mongo en local pour pouvoir text les tests en local
+     *  mongodb://localhost:27017/todo
+     *
+     *  URI de la bdd mongo avec docker
+     *  mongodb://localhost:27017/todo
+     *
+     */
+    mongoDB.connect("mongodb://mongo:27017/toDoApp");
 
     await ToDo.deleteMany();
   });
@@ -17,9 +26,9 @@ describe("testTodoModel", () => {
   });
 
   it("Create a new todo", () => {
-    const todoData = new ToDo({ name: "task", done: false });
+    const todoData = new ToDo({ text: "task", done: false });
     return todoData.save().then((data) => {
-      expect(data.name).toBe("task");
+      expect(data.text).toBe("task");
     });
   });
 
@@ -31,17 +40,17 @@ describe("testTodoModel", () => {
 
   it("Modify todo ", () => {
     return ToDo.findOneAndUpdate(
-      { name: "task" },
-      { name: "Gold mine" },
+      { text: "task" },
+      { text: "Gold mine" },
       { new: true }
     ).then((data) => {
-      expect(data.name).toBe("Gold mine");
+      expect(data.text).toBe("Gold mine");
     });
   });
 
   it("Delete todo ", () => {
     let todoData = {};
-    ToDo.findOne({ name: "Gold mine" }).then((data) => {
+    ToDo.findOne({ text: "Gold mine" }).then((data) => {
       todoData = data;
     });
     return ToDo.deleteOne({ _id: todoData._id }).then((data) => {

@@ -6,7 +6,7 @@ const toDoService = new ToDoService();
 
 /**
  * @openapi
- * /api/toDo:
+ * /api/todo:
  *   get:
  *     summary: Retrieve a list of toDo
  *     description: Retrieve a list of toDo
@@ -20,10 +20,19 @@ toDoRouter.get("/", (req, res) => {
 
 /**
  * @openapi
- * /api/toDo:
+ * /api/todo:
  *   post:
  *     summary: Create a new toDo
  *     description: Create a new toDo
+ *     parameters:
+ *     - name: text
+ *       description: text of the todo task
+ *       in: formData
+ *       required: true
+ *       type: string
+ *     responses:
+ *       201:
+ *         description: Created
  */
 toDoRouter.post("/", (req, res) => {
   return toDoService.createToDo(req, res);
@@ -31,10 +40,19 @@ toDoRouter.post("/", (req, res) => {
 
 /**
  * @openapi
- * /api/toDo/:id:
+ * /api/todo/:id:
  *   patch:
  *     summary: Update a toDo
  *     description: Update a toDo
+ *     parameters:
+ *     - name: id
+ *       description: id of the todo task
+ *       in: formData
+ *       required: true
+ *       type: string
+ *     responses:
+ *       201:
+ *         description: Updated
  */
 toDoRouter.patch("/:id", (req, res) => {
   return toDoService.getFindOneAndUpdateToDo(req, res);
