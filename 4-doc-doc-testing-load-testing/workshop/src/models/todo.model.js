@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const ToDoSchema = new mongoose.Schema({
   text: {
@@ -8,10 +8,10 @@ const ToDoSchema = new mongoose.Schema({
   done: {
     type: Boolean,
     required: false,
-    default: false
+    default: false,
   },
 });
 
-const ToDo = mongoose.model('ToDo', ToDoSchema)
+const ToDo = mongoose.model("ToDo", ToDoSchema);
 
 module.exports = { ToDo };
